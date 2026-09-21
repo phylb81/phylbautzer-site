@@ -1,0 +1,466 @@
+/* ---------------------------------------------------------
+   The Power of a Praying Mom — Case Study
+   Tokens sourced from the Figma file: Ivory #FBF8EE, Green #2A3636,
+   Red #E03E1A. Display type: Gate. Body type: Helvetica Neue.
+--------------------------------------------------------- */
+
+@font-face {
+  font-family: "Gate";
+  src: url("fonts/Gate-Regular.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Gate";
+  src: url("fonts/Gate-Italic.otf") format("opentype");
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+:root {
+  --ivory: #fbf8ee;
+  --green: #2a3636;
+  --red: #e03e1a;
+
+  --font-display: "Gate", ui-rounded, "Helvetica Neue", sans-serif;
+  --font-body: "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+  --max-width: 1160px;
+  --gutter: 24px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--ivory);
+  color: var(--green);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+a {
+  color: inherit;
+}
+
+/* Site bar */
+.site-bar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  padding: 14px var(--gutter);
+  background: color-mix(in srgb, var(--ivory) 88%, transparent);
+  backdrop-filter: blur(6px);
+  border-bottom: 1px solid color-mix(in srgb, var(--green) 12%, transparent);
+  font-size: 13px;
+  letter-spacing: 0.01em;
+}
+
+.site-bar__title {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.site-bar__meta {
+  opacity: 0.7;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+@media (max-width: 560px) {
+  .site-bar__title { display: none; }
+}
+
+/* Sections */
+.section {
+  padding: clamp(64px, 10vw, 140px) var(--gutter);
+}
+
+.section__inner {
+  max-width: var(--max-width);
+  margin: 0 auto;
+}
+
+.section__inner--narrow {
+  max-width: 900px;
+}
+
+/* Typography */
+.display {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(44px, 8vw, 112px);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  margin: 0;
+}
+
+.h2 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(28px, 4vw, 42px);
+  line-height: 1.34;
+  letter-spacing: -0.02em;
+  margin: 0 0 16px;
+}
+
+.h3 {
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 1.34;
+  letter-spacing: -0.04em;
+  margin: 0 0 8px;
+  display: block;
+}
+
+.lede {
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: clamp(18px, 2.2vw, 32px);
+  line-height: 1.4;
+  letter-spacing: -0.01em;
+  max-width: 780px;
+  margin: 24px 0 0;
+}
+
+.body-large {
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: clamp(19px, 2.4vw, 32px);
+  line-height: 1.55;
+  letter-spacing: -0.01em;
+  text-align: center;
+  margin: 0;
+}
+
+.body {
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 1.5;
+  letter-spacing: -0.01em;
+  margin: 0 0 16px;
+}
+
+.body:last-child {
+  margin-bottom: 0;
+}
+
+.caption {
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.45;
+  letter-spacing: -0.01em;
+  opacity: 0.85;
+  display: block;
+}
+
+/* Cover */
+.section--cover {
+  background: var(--green);
+  color: var(--ivory);
+  min-height: 92vh;
+  display: flex;
+  align-items: center;
+}
+
+/* Context */
+.section--context {
+  padding-top: clamp(48px, 8vw, 100px);
+  padding-bottom: clamp(48px, 8vw, 100px);
+}
+
+.context {
+  max-width: 780px;
+  margin: 0 auto;
+  padding-left: clamp(0px, 4vw, 40px);
+  border-left: 3px solid var(--red);
+}
+
+.context .body-large {
+  text-align: left;
+}
+
+.context__mark {
+  display: block;
+  font-family: var(--font-display);
+  font-size: clamp(64px, 8vw, 96px);
+  line-height: 1;
+  color: var(--red);
+  margin-bottom: -8px;
+}
+
+/* Triptych */
+.triptych {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 48px;
+}
+
+@media (max-width: 800px) {
+  .triptych {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+}
+
+/* Execution */
+.execution {
+  display: grid;
+  grid-template-columns: 1fr 1.4fr;
+  gap: 56px;
+  align-items: start;
+}
+
+.execution__figure {
+  margin: 0;
+}
+
+.execution__figure img {
+  width: 100%;
+  border-radius: 4px;
+}
+
+.execution__figure figcaption {
+  margin-top: 16px;
+}
+
+@media (max-width: 860px) {
+  .execution {
+    grid-template-columns: 1fr;
+  }
+  .execution__figure {
+    order: -1;
+  }
+}
+
+/* Framework */
+.section--framework {
+  background: var(--green);
+  color: var(--ivory);
+}
+
+.section--framework .h2 {
+  max-width: 640px;
+}
+
+.framework {
+  list-style: none;
+  margin: 40px 0 0;
+  padding: 0;
+  border-top: 1px solid color-mix(in srgb, var(--ivory) 22%, transparent);
+}
+
+.framework__beat {
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  gap: 32px;
+  align-items: start;
+  padding: 36px 0;
+  border-bottom: 1px solid color-mix(in srgb, var(--ivory) 22%, transparent);
+}
+
+.framework__beat .h3 {
+  color: var(--ivory);
+}
+
+.framework__beat .caption {
+  max-width: 640px;
+  opacity: 0.82;
+}
+
+.beat-num {
+  font-size: clamp(40px, 5vw, 64px);
+  color: var(--red);
+  line-height: 1;
+}
+
+@media (max-width: 700px) {
+  .framework__beat {
+    grid-template-columns: 1fr;
+    gap: 12px;
+    padding: 28px 0;
+  }
+  .beat-num {
+    font-size: 32px;
+  }
+}
+
+/* Social */
+.social-block {
+  margin-top: 40px;
+}
+
+.social-block:first-of-type {
+  margin-top: 40px;
+}
+
+.social-block__img {
+  width: 100%;
+  border-radius: 4px;
+}
+
+.phone-strip {
+  position: relative;
+}
+
+.phone-strip__link {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  outline: 2px solid transparent;
+  outline-offset: -2px;
+  transition: outline-color 0.15s ease, background-color 0.15s ease;
+}
+
+.phone-strip__link:hover,
+.phone-strip__link:focus-visible {
+  outline-color: var(--red);
+  background-color: color-mix(in srgb, var(--red) 8%, transparent);
+}
+
+.phone-strip__captions {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-top: 16px;
+  text-align: center;
+}
+
+.phone-strip__captions a {
+  font-size: 14px;
+  font-weight: 700;
+  text-decoration: none;
+  letter-spacing: -0.01em;
+  border-bottom: 1px solid transparent;
+}
+
+.phone-strip__captions a:hover {
+  border-bottom-color: var(--green);
+}
+
+@media (max-width: 700px) {
+  .phone-strip__captions {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Impact */
+.impact {
+  display: grid;
+  grid-template-columns: 1fr 1.4fr;
+  gap: 56px;
+  align-items: start;
+}
+
+.impact__text .body {
+  max-width: 480px;
+}
+
+.impact__stats {
+  display: flex;
+  flex-direction: column;
+}
+
+.stat {
+  display: flex;
+  align-items: baseline;
+  gap: 24px;
+  flex-wrap: wrap;
+  padding: 28px 0;
+  border-bottom: 1px solid color-mix(in srgb, var(--green) 20%, transparent);
+}
+
+.stat:first-child {
+  padding-top: 0;
+}
+
+.stat:last-child {
+  border-bottom: none;
+}
+
+.stat__num {
+  font-size: clamp(40px, 6vw, 80px);
+  white-space: nowrap;
+}
+
+.stat__label {
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: clamp(20px, 2.6vw, 32px);
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+
+@media (max-width: 860px) {
+  .impact {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+}
+
+/* Contact */
+.section--contact {
+  background: var(--green);
+  color: var(--ivory);
+  text-align: center;
+}
+
+.display--contact {
+  font-size: clamp(28px, 5vw, 42px);
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.contact-links {
+  font-family: var(--font-body);
+  font-size: clamp(14px, 1.8vw, 20px);
+  line-height: 1.8;
+  margin: 24px auto 0;
+  max-width: 900px;
+}
+
+.contact-links a {
+  text-decoration: none;
+  border-bottom: 1px solid color-mix(in srgb, var(--ivory) 40%, transparent);
+}
+
+.contact-links a:hover {
+  border-bottom-color: var(--ivory);
+}
+
+.contact-links span {
+  margin: 0 10px;
+  opacity: 0.5;
+}
+
+@media (max-width: 560px) {
+  .contact-links span {
+    display: block;
+    margin: 0;
+    opacity: 0;
+    height: 8px;
+  }
+}

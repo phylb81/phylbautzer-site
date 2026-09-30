@@ -16,6 +16,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;600;700&display=swap">
 <link rel="stylesheet" href="assets/styles.css">
+<script>if (window.matchMedia && !matchMedia("(prefers-reduced-motion: reduce)").matches && "IntersectionObserver" in window) document.documentElement.classList.add("js");</script>
 </head>
 <body>
 
@@ -67,7 +68,7 @@
   <!-- Core idea -->
   <section class="core">
     <p class="eyebrow">Core idea</p>
-    <h2 class="core__line">Children don’t need a perfect mom. <br class="br-wide">They need a praying one.</h2>
+    <h2 class="core__line"><span class="core__part">Children don’t need a perfect mom.</span> <br class="br-wide"><span class="core__part">They need a praying one.</span></h2>
   </section>
 
   <!-- Five-Beat Framework -->
@@ -222,5 +223,91 @@
   </div>
 </footer>
 
+<script>
+(function () {
+  var root = document.documentElement;
+  if (!root.classList.contains("js")) return;
+
+  // [group container, items inside it, stagger in ms, start delay in ms]
+  var groups = [
+    [".context__wrap", ":scope > *", 110, 0],
+    [".cic__col", ":scope > .h2, :scope .body > p", 90, 0],
+    [".core", ".eyebrow", 0, 0],
+    [".core", ".core__part", 650, 250],
+    [".framework__top .block-text", ":scope > :not(.body), :scope .body > p", 90, 0],
+    [".framework__top", ":scope > .beat", 0, 350],
+    [".beats", ":scope > .beat", 180, 0],
+    [".section-head", ":scope > *", 100, 0],
+    [".lead-magnet", ".lead-magnet__img", 0, 150],
+    [".phones", ":scope > .phone", 180, 0],
+    [".youversion .block-text", ":scope > :not(.body), :scope .body > p", 90, 0],
+    [".youversion", ".youversion__img", 0, 200],
+    [".impact__text", ":scope > :not(.body), :scope .body > p", 90, 0],
+    [".stats", ".stat", 110, 150],
+    [".contact__wrap", ":scope > *", 110, 0]
+  ];
+
+  var targets = new Map();
+  groups.forEach(function (g) {
+    document.querySelectorAll(g[0]).forEach(function (container) {
+      var items = [];
+      container.querySelectorAll(g[1]).forEach(function (el, i) {
+        el.classList.add("reveal");
+        el.style.setProperty("--d", g[3] + i * g[2] + "ms");
+        items.push(el);
+      });
+      targets.set(container, (targets.get(container) || []).concat(items));
+    });
+  });
+
+  // Count-up for the impact stats. Width is locked first so the grid never shifts.
+  function countUp(el) {
+    var text = el.textContent.trim();
+    var m = text.match(/^([^0-9]*)([0-9]+(?:[.][0-9]+)?)(.*)$/);
+    if (!m) return;
+    var end = parseFloat(m[2]);
+    var places = (m[2].split(".")[1] || "").length;
+    var start = null;
+    el.setAttribute("aria-label", text);
+    el.style.minWidth = el.getBoundingClientRect().width + "px";
+    function frame(t) {
+      if (start === null) start = t;
+      var p = Math.min((t - start) / 1200, 1);
+      var eased = 1 - Math.pow(1 - p, 3);
+      el.textContent = p < 1 ? m[1] + (end * eased).toFixed(places) + m[3] : text;
+      if (p < 1) requestAnimationFrame(frame);
+    }
+    requestAnimationFrame(frame);
+  }
+
+  function reveal(container) {
+    io.unobserve(container);
+    (targets.get(container) || []).forEach(function (el) {
+      if (el.classList.contains("is-in")) return;
+      el.classList.add("is-in");
+      if (el.classList.contains("stat")) {
+        var num = el.querySelector(".stat__num");
+        setTimeout(function () { countUp(num); }, parseInt(el.style.getPropertyValue("--d"), 10) || 0);
+      }
+    });
+    targets.delete(container);
+  }
+
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting) reveal(entry.target);
+    });
+  }, { rootMargin: "0px 0px -12% 0px", threshold: 0.15 });
+
+  targets.forEach(function (items, container) { io.observe(container); });
+
+  // Safety net: once the reader reaches the bottom, show anything still pending.
+  window.addEventListener("scroll", function onScroll() {
+    if (innerHeight + scrollY < document.documentElement.scrollHeight - 4) return;
+    window.removeEventListener("scroll", onScroll);
+    Array.from(targets.keys()).forEach(reveal);
+  }, { passive: true });
+})();
+</script>
 </body>
 </html>

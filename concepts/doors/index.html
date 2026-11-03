@@ -40,14 +40,16 @@ img, video { display: block; }
 
 /* ---------- Password screen ---------- */
 .gate {
+  position: relative;
   min-height: 100vh;
   min-height: 100svh;
   display: grid;
   place-items: center;
   padding: 48px 20px;
-  background: var(--ink);
+  background: var(--ink) url("assets/gate.jpg") center / cover no-repeat;
 }
-.gate__box { width: 100%; max-width: 360px; display: grid; gap: 28px; justify-items: center; text-align: center; }
+.gate::before { content: ""; position: absolute; inset: 0; background: radial-gradient(ellipse at center, rgba(10,12,15,0.55), rgba(10,12,15,0.8)); }
+.gate__box { position: relative; width: 100%; max-width: 360px; display: grid; gap: 28px; justify-items: center; text-align: center; }
 .gate__kicker { font-weight: 500; font-size: 12px; letter-spacing: 3.6px; text-transform: uppercase; color: rgba(233, 228, 218, 0.6); }
 .gate__title { font-family: var(--serif); font-size: 96px; letter-spacing: 4px; line-height: 1; color: var(--cream); }
 .gate__form { width: 100%; display: grid; gap: 12px; }
@@ -55,9 +57,9 @@ img, video { display: block; }
 .gate__input {
   width: 100%;
   padding: 14px 16px;
-  border: 1px solid rgba(233, 228, 218, 0.35);
+  border: 1px solid rgba(233, 228, 218, 0.5);
   border-radius: 0;
-  background: transparent;
+  background: rgba(10, 12, 15, 0.45);
   color: var(--cream);
   font: 500 16px var(--sans);
   letter-spacing: 1px;
@@ -277,7 +279,7 @@ img[data-img].is-in { opacity: 1; }
 
   .close { height: auto; padding: 96px 20px 48px; gap: 28px; }
   .close__lede { width: 100%; font-size: 30px; }
-  .close__cta { font-size: 48px; }
+  .close__cta { font-size: 40px; white-space: normal; line-height: 1.15; }
   .close__contact { font-size: 16px; display: flex; flex-direction: column; gap: 4px; }
   .close__sep { display: none; }
   .close__spacer { height: 24px; }
@@ -311,7 +313,7 @@ img[data-img].is-in { opacity: 1; }
 
 <script>
 (() => {
-  const M = {"salt":"K4Nq6BbVFfkVE0oTq3LITQ==","iterations":600000,"files":{"content":{"path":"assets/c.bin","size":8356},"camera":{"path":"assets/i-camera.bin","size":337429},"concept":{"path":"assets/i-concept.bin","size":295984},"core":{"path":"assets/i-core.bin","size":376685},"door":{"path":"assets/i-door.bin","size":154710},"ending":{"path":"assets/i-ending.bin","size":151049},"hero":{"path":"assets/i-hero.bin","size":703025},"poster":{"path":"assets/i-poster.bin","size":258827},"silence":{"path":"assets/i-silence.bin","size":180890},"statement":{"path":"assets/i-statement.bin","size":232606},"tension":{"path":"assets/i-tension.bin","size":189985},"film":{"path":"assets/f.bin","size":22239326}}};
+  const M = {"salt":"zgpWlz3SN5CDEJvjapJ2rQ==","iterations":600000,"files":{"content":{"path":"assets/c.bin","size":8355},"camera":{"path":"assets/i-camera.bin","size":337429},"concept":{"path":"assets/i-concept.bin","size":295984},"core":{"path":"assets/i-core.bin","size":376685},"door":{"path":"assets/i-door.bin","size":154710},"ending":{"path":"assets/i-ending.bin","size":151049},"hero":{"path":"assets/i-hero.bin","size":703025},"poster":{"path":"assets/i-poster.bin","size":258827},"silence":{"path":"assets/i-silence.bin","size":180890},"statement":{"path":"assets/i-statement.bin","size":232606},"tension":{"path":"assets/i-tension.bin","size":189985},"film":{"path":"assets/f.bin","size":22239326}}};
   const STORE = "doors-key";
   const root = document.documentElement;
 

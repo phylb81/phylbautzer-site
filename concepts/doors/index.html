@@ -191,12 +191,12 @@ img[data-img].is-in { opacity: 1; }
 .decisions__title { left: calc(96 * var(--u)); top: calc(150 * var(--u)); width: calc(900 * var(--u)); font-size: calc(50 * var(--u)); line-height: 1.12; color: var(--ink); }
 .mosaic { display: flex; gap: calc(4 * var(--u)); width: calc(1439 * var(--u)); }
 .mosaic__cell { position: relative; width: calc(477 * var(--u)); height: calc(560 * var(--u)); overflow: hidden; }
-.decisions__text { height: calc(412 * var(--u)); display: flex; gap: calc(48 * var(--u)); padding: calc(48 * var(--u)) calc(96 * var(--u)) calc(140 * var(--u)); }
+.decisions__text { height: calc(412 * var(--u)); display: flex; align-items: flex-start; gap: calc(48 * var(--u)); padding: calc(48 * var(--u)) calc(96 * var(--u)) calc(140 * var(--u)); }
 .decision { width: calc(384 * var(--u)); display: flex; flex-direction: column; gap: calc(14 * var(--u)); }
 .decision__head { display: flex; align-items: baseline; gap: calc(14 * var(--u)); color: rgba(10, 12, 15, 0.9); white-space: nowrap; line-height: normal; }
 .decision__num { font-size: calc(50 * var(--u)); }
 .decision__name { font-weight: 500; font-size: calc(12 * var(--u)); letter-spacing: calc(3.6 * var(--u)); text-transform: uppercase; }
-.decision__rule { height: 1px; background: rgba(10, 12, 15, 0.2); }
+.decision__rule { flex-shrink: 0; height: 1px; background: rgba(10, 12, 15, 0.2); }
 .decision__body { font-weight: 300; font-size: calc(15 * var(--u)); line-height: 1.75; color: rgba(10, 12, 15, 0.75); }
 
 /* 08 The Ending */
@@ -313,7 +313,7 @@ img[data-img].is-in { opacity: 1; }
 
 <script>
 (() => {
-  const M = {"salt":"NhaASVkaf8SBmmB/Hbghpg==","iterations":600000,"files":{"content":{"path":"assets/c.bin?v=50d839bce9","size":8355},"camera":{"path":"assets/i-camera.bin?v=975f1fa5e4","size":337429},"concept":{"path":"assets/i-concept.bin?v=281216a07e","size":295984},"core":{"path":"assets/i-core.bin?v=a0c53dac97","size":376685},"door":{"path":"assets/i-door.bin?v=470b714a63","size":154710},"ending":{"path":"assets/i-ending.bin?v=51dd3da93f","size":151049},"hero":{"path":"assets/i-hero.bin?v=ab076e5572","size":703025},"poster":{"path":"assets/i-poster.bin?v=e026c0c7bf","size":258827},"silence":{"path":"assets/i-silence.bin?v=468536a425","size":180890},"statement":{"path":"assets/i-statement.bin?v=5656b3fa51","size":232606},"tension":{"path":"assets/i-tension.bin?v=caa8f16d7d","size":189985},"film":{"path":"assets/f.bin?v=3c499223c8","size":22239326}}};
+  const M = {"salt":"HoZmbcWC8eUt8g3/qHd0gQ==","iterations":600000,"files":{"content":{"path":"assets/c.bin?v=a31fe7bc48","size":8355},"camera":{"path":"assets/i-camera.bin?v=1457bf5f05","size":337429},"concept":{"path":"assets/i-concept.bin?v=8a8a4771f7","size":295984},"core":{"path":"assets/i-core.bin?v=51478de45c","size":376685},"door":{"path":"assets/i-door.bin?v=c26f36ecd1","size":154710},"ending":{"path":"assets/i-ending.bin?v=b6ac479bf6","size":151049},"hero":{"path":"assets/i-hero.bin?v=56e299759a","size":703025},"poster":{"path":"assets/i-poster.bin?v=dea9c42718","size":258827},"silence":{"path":"assets/i-silence.bin?v=6d296d395e","size":180890},"statement":{"path":"assets/i-statement.bin?v=8381762442","size":232606},"tension":{"path":"assets/i-tension.bin?v=389c6c3a06","size":189985},"film":{"path":"assets/f.bin?v=2161d329a4","size":22239326}}};
   const STORE = "doors-key";
   const root = document.documentElement;
 

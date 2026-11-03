@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Doors</title>
+<meta name="robots" content="noindex, nofollow, noarchive">
+<meta name="referrer" content="no-referrer">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400&family=Instrument+Serif:ital@0;1&family=Montserrat:wght@300;400;500&display=swap">
+<style>
+/* Desktop reproduces the 1440px Figma frame exactly, scaled by --u (1 Figma px).
+   Below 900px the same content stacks into a single column. */
+:root {
+  --u: calc(100vw / 1440);
+  --ink: #0a0c0f;
+  --cream: #e9e4da;
+  --ivory: #fbf8ee;
+  --amber: #d4a062;
+  --serif: "Instrument Serif", Georgia, "Times New Roman", serif;
+  --sans: "Montserrat", "Helvetica Neue", Arial, sans-serif;
+  --geist: "Geist", "Helvetica Neue", Arial, sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--ink);
+  color: var(--cream);
+  font-family: var(--sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: clip;
+}
+[hidden] { display: none !important; }
+p, h1, h2, ul { margin: 0; font-weight: inherit; }
+img, video { display: block; }
+
+/* ---------- Password screen ---------- */
+.gate {
+  min-height: 100vh;
+  min-height: 100svh;
+  display: grid;
+  place-items: center;
+  padding: 48px 20px;
+  background: var(--ink);
+}
+.gate__box { width: 100%; max-width: 360px; display: grid; gap: 28px; justify-items: center; text-align: center; }
+.gate__kicker { font-weight: 500; font-size: 12px; letter-spacing: 3.6px; text-transform: uppercase; color: rgba(233, 228, 218, 0.6); }
+.gate__title { font-family: var(--serif); font-size: 96px; letter-spacing: 4px; line-height: 1; color: var(--cream); }
+.gate__form { width: 100%; display: grid; gap: 12px; }
+.gate__label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+.gate__input {
+  width: 100%;
+  padding: 14px 16px;
+  border: 1px solid rgba(233, 228, 218, 0.35);
+  border-radius: 0;
+  background: transparent;
+  color: var(--cream);
+  font: 500 16px var(--sans);
+  letter-spacing: 1px;
+  text-align: center;
+}
+.gate__input:focus { outline: none; border-color: var(--amber); }
+.gate__btn {
+  padding: 14px 16px;
+  border: 1px solid var(--cream);
+  border-radius: 0;
+  background: var(--cream);
+  color: var(--ink);
+  font: 500 12px var(--sans);
+  letter-spacing: 3.6px;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+.gate__btn:hover { background: var(--ivory); }
+.gate__btn:focus-visible { outline: 2px solid var(--amber); outline-offset: 3px; }
+.gate__btn[disabled] { opacity: 0.6; cursor: progress; }
+.gate__error { min-height: 1.5em; font-size: 14px; line-height: 1.5; color: var(--amber); }
+
+/* ---------- Shared ---------- */
+.s { position: relative; overflow: hidden; width: 100%; }
+.s > * { position: absolute; }
+.fill { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+img[data-img] { opacity: 0; transition: opacity 0.6s ease; }
+img[data-img].is-in { opacity: 1; }
+.serif { font-family: var(--serif); font-weight: 400; }
+.label {
+  font-weight: 500;
+  font-size: calc(12 * var(--u));
+  letter-spacing: calc(3.6 * var(--u));
+  text-transform: uppercase;
+  line-height: normal;
+  white-space: nowrap;
+}
+.body { font-weight: 500; font-size: calc(18 * var(--u)); line-height: 1.75; color: rgba(233, 228, 218, 0.75); }
+
+/* 01 Hero */
+.hero { height: calc(900 * var(--u)); background: var(--ink); }
+.hero__overlay { background: linear-gradient(to bottom, rgba(10,12,15,0.55), rgba(10,12,15,0.45) 50%, rgba(10,12,15,0.75)); }
+.hero__tag {
+  left: calc(575.5 * var(--u)); top: calc(120 * var(--u));
+  padding: calc(8 * var(--u)) calc(16 * var(--u));
+  border: 1px solid rgba(233, 228, 218, 0.6);
+  border-radius: 999px;
+  font-weight: 500; font-size: calc(14 * var(--u)); letter-spacing: calc(3 * var(--u));
+  text-transform: uppercase; white-space: nowrap; line-height: normal;
+}
+.hero__title {
+  left: 0; right: 0; top: calc(340 * var(--u));
+  font-family: var(--serif); font-weight: 400; font-size: calc(120 * var(--u));
+  letter-spacing: calc(4 * var(--u)); line-height: normal; text-align: center;
+}
+.hero__sub {
+  left: 0; right: 0; top: calc(500 * var(--u));
+  font-weight: 400; font-size: calc(18 * var(--u)); letter-spacing: calc(12 * var(--u));
+  text-transform: uppercase; line-height: normal; text-align: center;
+}
+.hero__by {
+  left: 0; right: 0; top: calc(800 * var(--u));
+  font-weight: 500; font-size: calc(12 * var(--u)); letter-spacing: calc(3.6 * var(--u));
+  text-transform: uppercase; text-align: center; color: rgba(233, 228, 218, 0.6);
+}
+
+/* 01b Target Audience */
+.audience { height: calc(240 * var(--u)); background: #1e1e1e; }
+.audience__label { left: calc(96 * var(--u)); top: calc(72 * var(--u)); color: var(--cream); }
+.audience__list { left: calc(816 * var(--u)); top: calc(72 * var(--u)); width: calc(480 * var(--u)); padding-left: calc(27 * var(--u)); list-style: disc; }
+.audience__list li::marker { font-size: 0.7em; }
+
+/* 02 The Tension */
+.tension { height: calc(720 * var(--u)); }
+.tension__media { overflow: hidden; }
+.tension__img { position: absolute; max-width: none; left: 0.02%; top: -15.97%; width: 106.88%; height: 128.25%; }
+.tension__label { left: calc(96 * var(--u)); top: calc(72 * var(--u)); color: #0f0b08; }
+.tension__head { left: calc(96 * var(--u)); top: calc(239 * var(--u)); width: calc(422 * var(--u)); font-size: calc(50 * var(--u)); line-height: 1.12; color: var(--cream); }
+.tension__copy { left: calc(816 * var(--u)); top: calc(247 * var(--u)); width: calc(480 * var(--u)); display: flex; flex-direction: column; gap: calc(24 * var(--u)); }
+.tension__pull { font-size: calc(30 * var(--u)); line-height: 1.3; color: var(--amber); }
+
+/* 03 The Insight */
+.insight { height: calc(240 * var(--u)); background: var(--cream); }
+.insight__label { left: calc(96 * var(--u)); top: calc(72 * var(--u)); color: rgba(10, 12, 15, 0.55); }
+.insight__copy { left: calc(817 * var(--u)); top: calc(57 * var(--u)); width: calc(480 * var(--u)); display: flex; flex-direction: column; gap: calc(24 * var(--u)); }
+.insight__body { font-weight: 500; font-size: calc(18 * var(--u)); line-height: 1.75; letter-spacing: calc(0.36 * var(--u)); color: var(--ink); }
+.insight__pull { font-size: calc(30 * var(--u)); line-height: 1.3; color: rgba(10, 12, 15, 0.6); }
+
+/* 04b Concept statement */
+.statement { height: calc(900 * var(--u)); background: #12151c; }
+.statement__media { left: 0; right: 0; top: 0; height: calc(897 * var(--u)); overflow: hidden; transform: scaleX(-1); }
+.statement__img { position: absolute; max-width: none; left: 0; top: -24.53%; width: 138.96%; height: 125.48%; }
+.statement__text { left: calc(817 * var(--u)); top: calc(390 * var(--u)); width: calc(460 * var(--u)); font-size: calc(30 * var(--u)); line-height: 1.3; color: var(--cream); }
+
+/* 05 Core Idea */
+.core { height: calc(900 * var(--u)); background: var(--ink); }
+.core__overlay { background: linear-gradient(to bottom, rgba(10,12,15,0.45), rgba(10,12,15,0.55)); }
+.core__label { left: calc(96 * var(--u)); top: calc(72 * var(--u)); color: rgba(233, 228, 218, 0.7); }
+.core__line { left: calc(360 * var(--u)); top: calc(401 * var(--u)); width: calc(720 * var(--u)); font-size: calc(40 * var(--u)); line-height: 1.22; text-align: center; color: var(--cream); }
+
+/* 04 The Concept */
+.concept { height: calc(900 * var(--u)); background: #c4c4c4; }
+.concept__media { left: 0; top: 0; width: 100%; height: calc(922 * var(--u)); transform: scaleX(-1); }
+.concept__shade { background: rgba(0, 0, 0, 0.5); }
+.concept__label { left: calc(96 * var(--u)); top: calc(72 * var(--u)); color: var(--cream); }
+.concept__head { left: calc(96 * var(--u)); top: calc(412 * var(--u)); width: calc(325 * var(--u)); font-size: calc(50 * var(--u)); line-height: 1.12; color: var(--cream); }
+.concept__copy { left: calc(816 * var(--u)); top: calc(163 * var(--u)); width: calc(480 * var(--u)); display: flex; flex-direction: column; gap: calc(34.8 * var(--u)); }
+
+/* 06 The Film */
+.film { height: calc(1000 * var(--u)); background: var(--ink); }
+.film__label { left: calc(96 * var(--u)); top: calc(72 * var(--u)); color: rgba(233, 228, 218, 0.7); }
+.film__frame { left: calc(96 * var(--u)); top: calc(150 * var(--u)); width: calc(1248 * var(--u)); height: calc(702 * var(--u)); background: #000; overflow: hidden; }
+.film__video { object-fit: contain; background: #000; }
+.film__status {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px;
+  background: rgba(10, 12, 15, 0.55);
+}
+.film__bar { width: min(280px, 60%); height: 2px; background: rgba(233, 228, 218, 0.2); overflow: hidden; }
+.film__fill { display: block; height: 100%; width: 0; background: var(--amber); transition: width 0.2s linear; }
+.film__msg { font-weight: 500; font-size: 12px; letter-spacing: 3.6px; text-transform: uppercase; color: var(--cream); text-align: center; padding: 0 16px; }
+.film__note { left: calc(96 * var(--u)); top: calc(890 * var(--u)); width: calc(1248 * var(--u)); font-size: calc(28 * var(--u)); line-height: 1.3; text-align: center; color: rgba(233, 228, 218, 0.85); }
+
+/* 07 Three Decisions */
+.decisions { background: var(--cream); color: var(--ink); }
+.decisions__head { position: relative; height: calc(300 * var(--u)); }
+.decisions__head > * { position: absolute; }
+.decisions__label { left: calc(96 * var(--u)); top: calc(72 * var(--u)); color: rgba(10, 12, 15, 0.55); }
+.decisions__title { left: calc(96 * var(--u)); top: calc(150 * var(--u)); width: calc(900 * var(--u)); font-size: calc(50 * var(--u)); line-height: 1.12; color: var(--ink); }
+.mosaic { display: flex; gap: calc(4 * var(--u)); width: calc(1439 * var(--u)); }
+.mosaic__cell { position: relative; width: calc(477 * var(--u)); height: calc(560 * var(--u)); overflow: hidden; }
+.decisions__text { height: calc(412 * var(--u)); display: flex; gap: calc(48 * var(--u)); padding: calc(48 * var(--u)) calc(96 * var(--u)) calc(140 * var(--u)); }
+.decision { width: calc(384 * var(--u)); display: flex; flex-direction: column; gap: calc(14 * var(--u)); }
+.decision__head { display: flex; align-items: baseline; gap: calc(14 * var(--u)); color: rgba(10, 12, 15, 0.9); white-space: nowrap; line-height: normal; }
+.decision__num { font-size: calc(50 * var(--u)); }
+.decision__name { font-weight: 500; font-size: calc(12 * var(--u)); letter-spacing: calc(3.6 * var(--u)); text-transform: uppercase; }
+.decision__rule { height: 1px; background: rgba(10, 12, 15, 0.2); }
+.decision__body { font-weight: 300; font-size: calc(15 * var(--u)); line-height: 1.75; color: rgba(10, 12, 15, 0.75); }
+
+/* 08 The Ending */
+.ending { height: calc(878 * var(--u)); background: var(--ink); }
+.ending__overlay { background: linear-gradient(to bottom, rgba(10,12,15,0.1), rgba(10,12,15,0.2) 55%, rgba(10,12,15,0.92)); }
+.ending__label { left: calc(96 * var(--u)); top: calc(58 * var(--u)); color: rgba(233, 228, 218, 0.7); }
+.ending__head { left: calc(96 * var(--u)); top: calc(628 * var(--u)); width: calc(1248 * var(--u)); font-size: calc(67 * var(--u)); line-height: 1.15; color: var(--cream); }
+.ending__body { left: calc(96 * var(--u)); top: calc(732 * var(--u)); width: calc(670 * var(--u)); font-weight: 500; font-size: calc(15 * var(--u)); line-height: 1.75; color: rgba(233, 228, 218, 0.75); }
+
+/* 08c End Cards */
+.cards { height: calc(824 * var(--u)); background: #000; display: flex; flex-direction: column; align-items: center; gap: calc(48 * var(--u)); padding: calc(160 * var(--u)) 0; text-align: center; }
+.cards__label { color: rgba(233, 228, 218, 0.45); }
+.cards__line { width: calc(900 * var(--u)); font-size: calc(38 * var(--u)); line-height: 1.22; color: var(--cream); }
+.cards__line--narrow { width: calc(640 * var(--u)); }
+.cards__rule { width: calc(48 * var(--u)); height: 1px; background: rgba(233, 228, 218, 0.4); }
+.cards__url { color: rgba(212, 160, 98, 0.95); }
+
+/* 09 Close */
+.close { height: calc(843 * var(--u)); display: flex; flex-direction: column; align-items: center; gap: calc(36 * var(--u)); padding: calc(200 * var(--u)) calc(96 * var(--u)) calc(64 * var(--u)); background: var(--ink); text-align: center; }
+.close__lede { width: calc(1248 * var(--u)); font-size: calc(50 * var(--u)); line-height: 1.12; color: var(--cream); }
+.close__cta { font-family: var(--serif); font-style: italic; font-size: calc(67 * var(--u)); line-height: normal; color: var(--amber); white-space: nowrap; }
+.close__contact { width: 100%; font-family: var(--geist); font-size: calc(20 * var(--u)); line-height: 1.7; color: var(--ivory); opacity: 0.6; }
+.close__sep { padding: 0 0.75em; }
+.close__spacer { height: calc(96 * var(--u)); }
+.close__rule { width: calc(1248 * var(--u)); height: 1px; background: rgba(233, 228, 218, 0.15); }
+.close__foot { width: 100%; display: flex; justify-content: space-between; align-items: flex-start; color: rgba(233, 228, 218, 0.5); line-height: normal; text-align: left; }
+.close__meta { font-weight: 500; font-size: calc(10 * var(--u)); letter-spacing: calc(3 * var(--u)); text-transform: uppercase; white-space: pre; }
+.close__credit { font-weight: 300; font-size: calc(11 * var(--u)); white-space: nowrap; }
+
+/* ---------- Phone and small tablet ---------- */
+@media (max-width: 899px) {
+  :root { --u: 1px; }
+  .s > * { position: relative; }
+  .s > .fill, .s > .tension__media, .s > .statement__media, .s > .concept__media { position: absolute; }
+  .s { height: auto; padding: 56px 20px; display: flex; flex-direction: column; gap: 20px; }
+  .s > *:not(.fill):not(.tension__media):not(.statement__media):not(.concept__media) { left: auto; top: auto; width: auto; max-width: 100%; }
+  .label { white-space: normal; }
+  .body, .insight__body { font-size: 16px; }
+
+  .hero { min-height: 100svh; justify-content: center; text-align: center; gap: 24px; padding-block: 96px 64px; }
+  .hero__tag { position: absolute !important; top: 40px !important; left: 50% !important; transform: translateX(-50%); font-size: 11px; letter-spacing: 2.4px; padding: 7px 14px; }
+  .hero__title { font-size: 76px; letter-spacing: 3px; }
+  .hero__sub { font-size: 13px; letter-spacing: 6px; line-height: 1.6; }
+  .hero__by { position: absolute !important; top: auto !important; bottom: 40px; left: 0 !important; right: 0; }
+
+  .tension__img, .statement__img { left: 0; top: 0; width: 100%; height: 100%; object-fit: cover; }
+  .tension { padding-block: 72px; }
+  .tension__label { color: var(--cream); }
+  .tension__media::after, .statement__media::after { content: ""; position: absolute; inset: 0; background: rgba(10, 12, 15, 0.55); }
+  .tension__head, .concept__head, .decisions__title { font-size: 38px; }
+  .tension__pull, .insight__pull, .statement__text { font-size: 26px; }
+
+  .statement { min-height: 520px; justify-content: flex-end; }
+  .statement__media { height: 100%; }
+  .core { min-height: 560px; justify-content: space-between; }
+  .core__line { font-size: 32px; margin-block: auto; }
+  .concept { gap: 28px; }
+  .concept__media { height: 100%; }
+  .concept__copy { gap: 1.2em; }
+
+  .film { gap: 20px; }
+  .film__frame { width: 100%; height: auto; aspect-ratio: 16 / 9; }
+  .film__note { font-size: 22px; }
+
+  .decisions__head { height: auto; padding: 56px 20px 32px; display: flex; flex-direction: column; gap: 20px; }
+  .decisions__head > * { position: static; width: auto; }
+  .mosaic { width: 100%; flex-direction: column; gap: 4px; }
+  .mosaic__cell { width: 100%; height: auto; aspect-ratio: 477 / 560; }
+  .decisions__text { height: auto; flex-direction: column; gap: 40px; padding: 40px 20px 72px; }
+  .decision { width: auto; }
+  .decision__num { font-size: 44px; }
+  .decision__body { font-size: 15px; }
+
+  .ending { min-height: 640px; justify-content: flex-end; }
+  .ending__label { position: absolute !important; top: 40px !important; left: 20px !important; }
+  .ending__head { font-size: 44px; }
+
+  .cards { height: auto; padding: 96px 20px; gap: 32px; }
+  .cards__line, .cards__line--narrow { width: 100%; font-size: 28px; }
+
+  .close { height: auto; padding: 96px 20px 48px; gap: 28px; }
+  .close__lede { width: 100%; font-size: 30px; }
+  .close__cta { font-size: 48px; }
+  .close__contact { font-size: 16px; display: flex; flex-direction: column; gap: 4px; }
+  .close__sep { display: none; }
+  .close__spacer { height: 24px; }
+  .close__rule { width: 100%; }
+  .close__foot { flex-direction: column; gap: 12px; text-align: center; align-items: center; }
+  .close__meta { white-space: normal; letter-spacing: 2px; }
+  .close__credit { white-space: normal; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  img[data-img], .film__fill { transition: none; }
+}
+</style>
+</head>
+<body>
+
+<div class="gate" id="gate">
+  <div class="gate__box">
+    <p class="gate__kicker">Private concept</p>
+    <p class="gate__title">DOORS</p>
+    <form class="gate__form" id="gate-form" autocomplete="off">
+      <label class="gate__label" for="gate-pw">Password</label>
+      <input class="gate__input" id="gate-pw" type="password" placeholder="Password" required>
+      <button class="gate__btn" id="gate-btn" type="submit">Open</button>
+      <p class="gate__error" id="gate-error" role="alert"></p>
+    </form>
+  </div>
+</div>
+
+<main id="page" hidden></main>
+
+<script>
+(() => {
+  const M = {"salt":"K4Nq6BbVFfkVE0oTq3LITQ==","iterations":600000,"files":{"content":{"path":"assets/c.bin","size":8356},"camera":{"path":"assets/i-camera.bin","size":337429},"concept":{"path":"assets/i-concept.bin","size":295984},"core":{"path":"assets/i-core.bin","size":376685},"door":{"path":"assets/i-door.bin","size":154710},"ending":{"path":"assets/i-ending.bin","size":151049},"hero":{"path":"assets/i-hero.bin","size":703025},"poster":{"path":"assets/i-poster.bin","size":258827},"silence":{"path":"assets/i-silence.bin","size":180890},"statement":{"path":"assets/i-statement.bin","size":232606},"tension":{"path":"assets/i-tension.bin","size":189985},"film":{"path":"assets/f.bin","size":22239326}}};
+  const STORE = "doors-key";
+  const root = document.documentElement;
+
+  const setUnit = () => {
+    if (root.clientWidth >= 900) root.style.setProperty("--u", root.clientWidth / 1440 + "px");
+    else root.style.removeProperty("--u");
+  };
+  setUnit();
+  addEventListener("resize", setUnit);
+
+  const fromB64 = (s) => Uint8Array.from(atob(s), (c) => c.charCodeAt(0));
+  const toB64 = (buf) => btoa(String.fromCharCode(...new Uint8Array(buf)));
+
+  async function deriveKey(password) {
+    const base = await crypto.subtle.importKey("raw", new TextEncoder().encode(password), "PBKDF2", false, ["deriveKey"]);
+    return crypto.subtle.deriveKey(
+      { name: "PBKDF2", salt: fromB64(M.salt), iterations: M.iterations, hash: "SHA-256" },
+      base, { name: "AES-GCM", length: 256 }, true, ["decrypt"]);
+  }
+
+  const decrypt = (key, buf) =>
+    crypto.subtle.decrypt({ name: "AES-GCM", iv: new Uint8Array(buf, 0, 12) }, key, new Uint8Array(buf, 12));
+
+  async function load(file, onProgress) {
+    const res = await fetch(file.path);
+    if (!res.ok) throw new Error("HTTP " + res.status);
+    if (!onProgress || !res.body) return res.arrayBuffer();
+    const reader = res.body.getReader();
+    let out = new Uint8Array(file.size), got = 0;
+    for (;;) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      if (got + value.length > out.length) { const grown = new Uint8Array(got + value.length); grown.set(out); out = grown; }
+      out.set(value, got);
+      got += value.length;
+      onProgress(Math.min(got / file.size, 1));
+    }
+    return out.buffer.slice(0, got);
+  }
+
+  async function open(key) {
+    const html = new TextDecoder().decode(await decrypt(key, await load(M.files.content)));
+    const page = document.getElementById("page");
+    page.innerHTML = html;
+    document.getElementById("gate").hidden = true;
+    page.hidden = false;
+    setUnit();
+
+    page.querySelectorAll("img[data-img]").forEach(async (img) => {
+      try {
+        const data = await decrypt(key, await load(M.files[img.dataset.img]));
+        img.onload = () => img.classList.add("is-in");
+        img.src = URL.createObjectURL(new Blob([data], { type: "image/jpeg" }));
+      } catch (e) { /* the section keeps its background colour */ }
+    });
+
+    const fill = page.querySelector(".film__fill");
+    const msg = page.querySelector(".film__msg");
+    const status = page.querySelector(".film__status");
+    const video = page.querySelector(".film__video");
+    try {
+      const enc = await load(M.files.film, (p) => {
+        const pct = Math.round(p * 100);
+        fill.style.width = pct + "%";
+        msg.textContent = "Loading film " + pct + "%";
+      });
+      msg.textContent = "Preparing film";
+      const data = await decrypt(key, enc);
+      const poster = page.querySelector(".film__poster");
+      if (poster.src) video.poster = poster.src;
+      video.src = URL.createObjectURL(new Blob([data], { type: "video/mp4" }));
+      video.hidden = false;
+      status.hidden = true;
+      page.querySelector(".film__poster").hidden = true;
+    } catch (e) {
+      fill.style.width = "0";
+      msg.textContent = "The film didn’t load. Check your connection and reload the page.";
+    }
+  }
+
+  const form = document.getElementById("gate-form");
+  const input = document.getElementById("gate-pw");
+  const btn = document.getElementById("gate-btn");
+  const error = document.getElementById("gate-error");
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    error.textContent = "";
+    btn.disabled = true;
+    btn.textContent = "Opening";
+    try {
+      const key = await deriveKey(input.value.trim());
+      await open(key);
+      try { sessionStorage.setItem(STORE, toB64(await crypto.subtle.exportKey("raw", key))); } catch (_) {}
+    } catch (err) {
+      error.textContent = err && err.name === "OperationError"
+        ? "That password didn’t work. Check the spelling and try again."
+        : "The page couldn’t load. Check your connection and try again.";
+      btn.disabled = false;
+      btn.textContent = "Open";
+      input.select();
+    }
+  });
+
+  (async () => {
+    let saved = null;
+    try { saved = sessionStorage.getItem(STORE); } catch (_) {}
+    if (!saved) { input.focus(); return; }
+    try {
+      const key = await crypto.subtle.importKey("raw", fromB64(saved), "AES-GCM", false, ["decrypt"]);
+      await open(key);
+    } catch (_) {
+      try { sessionStorage.removeItem(STORE); } catch (__) {}
+      input.focus();
+    }
+  })();
+})();
+</script>
+</body>
+</html>
